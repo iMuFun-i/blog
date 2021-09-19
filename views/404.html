@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .errPage {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .err {
+      width: 500px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .link a{
+      display: block;
+      text-decoration: none;
+      background-color: rgb(68,68,68);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="errPage">
+    <div class="err">
+      <img src="/public/img/404.png" alt="">
+      <p>啊哦~现在访问的人数太多，请稍后重试~</p>
+      <div class="link">
+        <a href="/">回到首页</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

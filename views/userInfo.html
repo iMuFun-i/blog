@@ -1,0 +1,101 @@
+{{extend './layout.html'}}
+{{block 'head'}}
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-width: 1040px;
+  }
+  html {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background-color: rgb(235,229,229);
+  }
+  main {
+    background-color: #fff;
+    margin: auto auto;
+    border-radius: 10px;
+    width: 80%;
+    height: calc(100vh - 210px);
+    padding: 10px 15px;
+    color: #333;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0 30px 0;
+  }
+  .detail {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .basicInfo {
+    height: 80px;
+    margin: 10px 0 15px 0;
+  }
+  .avatar {
+    float: left;
+    height: 80px;
+    margin-right: 10px;
+  }
+  .nickname {
+    float: left;
+    margin-top: 12px;
+  }
+  .nickname p {
+    margin: 8px 0 8px 0;
+  }
+  .notImp {
+    color: rgb(112, 107, 107);
+    margin-right: 30px;
+  }
+  .listInfo {
+    margin-left: 6px;
+  }
+  .subBtn {
+    margin: 32px auto 0;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+  }
+</style>
+{{/block}}
+
+{{block 'content'}}
+<main>
+  <div class="container">
+    <h2 class="header"><span>个人资料</span></h2>
+    <div class="detail">
+      <div class="basicInfo">
+        <img class="avatar" src="{{ user.avatar }}" alt="">
+        <div class="nickname">
+          <p>{{ user.nickname }}</p>
+          <p class="notImp">{{ user.bio }}</p>
+        </div>
+      </div>
+      <hr>
+      <p class="listInfo"><span class="notImp">邮箱</span>{{ user.email }}</p>
+      <p class="listInfo"><span class="notImp">性别</span>{{ user.gender == -1 ? '保密' : user.gender == 0 ? '男' : '女' }}</p>
+      <p class="listInfo"><span class="notImp">职业</span>{{ user.carrer || '---' }}</p>
+      <p class="listInfo"><span class="notImp">公司</span>{{ user.company || '---' }}</p>
+      <p class="listInfo"><span class="notImp">电话</span>{{ user.tel || '---' }}</p>
+      <div class="input-group subBtn">
+        <a class="btn btn-success" role="button" href="/editUserInfo">编辑资料</a>
+        <a class="btn btn-info" role="button" href="/">首页</a>
+      </div>
+    </div>
+  </div>
+</main>
+{{/block}}
+
+
+{{block 'script'}}
+<script>
+
+</script>
+{{/block}}

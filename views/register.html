@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: rgb(236, 229, 229);
+            min-width: 1040px;
+        }
+
+        .box {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            width: 28%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        form {
+            padding: 20px 20px 0px;
+        }
+
+        .cell {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            margin-bottom: 10px;
+        }
+
+        .cell>input {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #bdc3c7;
+            margin-left: 30px;
+            text-indent: 5px;
+            flex: 1;
+        }
+
+        .cell>span {
+            text-align: right;
+            width: 80px;
+        }
+
+
+        .subBtn {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+            margin-top: 30px;
+        }
+
+        .btn-success {
+            border: none;
+            padding: 10px 30px;
+            background: #2980b9;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            text-decoration: none;
+            color: #000;
+            background: #fff;
+            border: 1px solid #999;
+            padding: 7px 30px;
+            border-radius: 10px;
+        }
+
+        .btn-success:hover,
+        .btn-danger:hover {
+            opacity: .8;
+        }
+
+
+        .subBtn button,
+        #cancel {
+            margin: 15px;
+        }
+
+        .tip {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 45px;
+        }
+
+        .tip>span:first-child a {
+            color: #3498db;
+        }
+
+        .tip>span:first-child a:hover {
+            text-decoration: underline;
+        }
+
+        .tip>span a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .tip>span:last-child a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2>注册信息</h2>
+        <!-- 表单具有默认的提交行为，默认是同步的，同步表单提交，浏览器会锁死等待服务端的响应结果 
+             同步表单提交，浏览器会默认把客户端响应的内容渲染页面-->
+        <form class="bs-example bs-example-form" role="form" id="register_form">
+            <div class="input-group cell">
+                <span class="input-group-addon">邮箱:</span>
+                <input type="text" class="form-control" placeholder="请输入邮箱" name="email" minlength="5">
+            </div>
+            <br>
+            <div class="input-group cell">
+                <span class="input-group-addon">密码:</span>
+                <input type="password" autocomplete="off" class="form-control" placeholder="请输入密码" name="password"
+                    minlength="6">
+            </div>
+
+            <div class="input-group subBtn">
+                <button type="submit" class="btn btn-success" id="submit">确认</button>
+                <a href="/" class="btn btn-danger" id="cancel">取消</a>
+            </div>
+
+            <div class="input-group tip">
+                <span>已有账号？
+                    <a href="/login">点击登录</a>
+                </span>
+                <span>
+                    <a href="/">返回首页</a>
+                </span>
+            </div>
+        </form>
+    </div>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $('#register_form').on('submit', function (e) {
+            e.preventDefault();
+            if (judge()) {
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/register',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        var err_code = data.err_code;
+                        if (err_code === 0) {
+                            window.alert('注册成功！')
+                            window.location.href = '/';
+                        } else if (err_code === 1) {
+                            window.alert('邮箱已存在！')
+                        } else if (err_code === 500) {
+                            window.alert('服务器繁忙，请稍后再试！')
+                        }
+                    }
+                })
+            }
+        })
+
+        function judge() {
+            var i = 0;
+            //遍历input标签，判断是否有内容未填写
+            $("input").each(function () {
+                var vl = $(this).val();
+                if (vl == "") {
+                    i = 1;
+                }
+            });
+            //如果有未填写的，则return false阻止提交
+            if (i == 1) {
+                alert('请将信息填写完整');
+                return false;
+            } else {
+                return true
+            }
+        }
+    </script>
+</body>
+
+</html>
